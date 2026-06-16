@@ -15,7 +15,7 @@ ROOT_DIR = Path(__file__).parent.parent.parent
 
 DATA_DIR = ROOT_DIR / "data"
 RAW_DATA_PATH = DATA_DIR / "raw" / "CO2_Emissions_Canada.csv"
-INTERIM_DATA_PATH = DATA_DIR / "interim" / "cleaned.csv"
+CLEANED_DATA_PATH = DATA_DIR / "raw" / "cleaned.csv"
 
 def clean_data(df: pd.DataFrame) -> pd.DataFrame:
     logging.info('Data Cleaning started')
@@ -42,17 +42,12 @@ def main():
 
     cleaned_df = clean_data(df)
 
-    INTERIM_DATA_PATH.parent.mkdir(
-        parents=True,
-        exist_ok=True
-    )
-
     cleaned_df.to_csv(
-        INTERIM_DATA_PATH,
+        CLEANED_DATA_PATH,
         index=False
     )
 
-    logging.info(f'Dataset saved at {INTERIM_DATA_PATH}')
+    logging.info(f'Dataset saved at {CLEANED_DATA_PATH}')
 
 if __name__ == '__main__':
     main()

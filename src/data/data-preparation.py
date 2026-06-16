@@ -15,8 +15,8 @@ ROOT_DIR = Path(__file__).parent.parent.parent
 
 
 DATA_DIR = ROOT_DIR / "data"
-INTERIM_DATA_PATH = DATA_DIR / "interim" / "cleaned.csv"
-PROCESSED_DIR = DATA_DIR / "processed"
+CLEANED_DATA_PATH = DATA_DIR / "raw" / "cleaned.csv"
+INTERIM_DIR = DATA_DIR / "interim"
 
 def split_data(data: pd.DataFrame, test_size: float, random_state: int):
     train_data, test_data = train_test_split(
@@ -35,21 +35,15 @@ def read_params(file_path):
 def save_data(data: pd.DataFrame, save_path: Path):
     data.to_csv(save_path, index=False)
 
-if __name__ == '__main__':
-    data_path = INTERIM_DATA_PATH
+def main():
+    data_path = CLEANED_DATA_PATH
     params_file_path = ROOT_DIR / 'params.yaml'
 
     df = pd.read_csv(data_path)
     logging.info('Data loaded successfully')
 
-
-    print("PARAM FILE:", params_file_path)
-    print("EXISTS:", params_file_path.exists())
-
     params = read_params(params_file_path)
     print("PARAMS:", params)
-    print("TYPE:", type(params))
-
 
     parameters = read_params(params_file_path)['Data_Preparation']
     test_size = parameters['test_size']
@@ -59,5 +53,10 @@ if __name__ == '__main__':
     train_data, test_data = split_data(df, test_size, random_state)
     logging.info('Data Splitted successfully')
 
-    save_data(train_data, PROCESSED_DIR/'train.csv')
-    save_data(test_data, PROCESSED_DIR/'test.csv')
+    save_data(train_data, INTERIM_DIR/'train.csv')
+    save_data(test_data, INTERIM_DIR/'test.csv')
+
+    logging.info('Data saved successfully')
+
+if __name__ == '__main__':
+    main()
