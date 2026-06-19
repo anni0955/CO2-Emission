@@ -94,3 +94,8 @@ data/**
 
 # Mypy cache
 .mypy_cache/
+
+# models
+models/**
+!models/
+!models/**/*.dvc
