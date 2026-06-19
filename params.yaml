@@ -6,3 +6,16 @@ train_model:
   n_estimators: 251
   max_depth: 6
   learning_rate: 0.10083304360762205
+
+predict_model: 
+  Make: 'ford'
+  Model: 'focus ffv'
+  Vehicle Class: 'compact'
+  Engine Size(L): 3.5
+  Cylinders: 4
+  Transmission: 'M5'
+  Fuel Type: 'E'
+  Fuel Consumption City (L/100 km): 16.1
+  Fuel Consumption Hwy (L/100 km): 11.8
+  Fuel Consumption Comb (L/100 km): 13.5
+  Fuel Consumption Comb (mpg): 22
