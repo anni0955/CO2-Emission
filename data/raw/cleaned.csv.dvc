@@ -1,6 +1,0 @@
-outs:
-- md5: 4514915ec696884a776bf1c4c714be94
-  size: 388894
-  isexec: true
-  hash: md5
-  path: cleaned.csv

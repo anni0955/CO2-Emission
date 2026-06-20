@@ -1,0 +1,133 @@
+schema: '2.0'
+stages:
+  data-cleaning:
+    cmd: python src/data/data-cleaning.py
+    deps:
+    - path: data/raw/CO2_Emissions_Canada.csv
+      hash: md5
+      md5: e22c65b6c7464ba20e95d518a2275420
+      size: 476091
+      isexec: true
+    - path: src/data/data-cleaning.py
+      hash: md5
+      md5: c16e814ed6753bccdadceec7fe20a5cc
+      size: 1165
+      isexec: true
+    outs:
+    - path: data/raw/cleaned.csv
+      hash: md5
+      md5: 4514915ec696884a776bf1c4c714be94
+      size: 388894
+      isexec: true
+  data-preparation:
+    cmd: python src/data/data-preparation.py
+    deps:
+    - path: data/raw/cleaned.csv
+      hash: md5
+      md5: 4514915ec696884a776bf1c4c714be94
+      size: 388894
+      isexec: true
+    - path: src/data/data-preparation.py
+      hash: md5
+      md5: 8f77ab88ae222f98e6d1a08cbd6df25d
+      size: 1646
+      isexec: true
+    params:
+      params.yaml:
+        Data_Preparation.random_state: 41
+        Data_Preparation.test_size: 0.2
+    outs:
+    - path: data/interim/test.csv
+      hash: md5
+      md5: 3339909c0c8b648aa021c053aeaf5535
+      size: 78183
+      isexec: true
+    - path: data/interim/train.csv
+      hash: md5
+      md5: 5fc3765e4f441d5cf8ac423648090816
+      size: 310930
+      isexec: true
+  feature_engineering:
+    cmd: python src/features/feature_engineering.py
+    deps:
+    - path: data/interim/test.csv
+      hash: md5
+      md5: 3339909c0c8b648aa021c053aeaf5535
+      size: 78183
+      isexec: true
+    - path: data/interim/train.csv
+      hash: md5
+      md5: 5fc3765e4f441d5cf8ac423648090816
+      size: 310930
+      isexec: true
+    - path: src/features/feature_engineering.py
+      hash: md5
+      md5: bd571b5a5100516910e7707889eb8f96
+      size: 2467
+      isexec: true
+    outs:
+    - path: data/processed/test_processed.csv
+      hash: md5
+      md5: bf5786e7649be7b24f8207d0594a55c6
+      size: 7744979
+      isexec: true
+    - path: data/processed/train_processed.csv
+      hash: md5
+      md5: 82fbf0c360a1e9938ed7feb5abd0e157
+      size: 30834368
+      isexec: true
+    - path: models/transformer.joblib
+      hash: md5
+      md5: 5406f907d9956dbef5344dc46a3aec06
+      size: 30013
+      isexec: true
+  train_model:
+    cmd: python src/models/train_model.py
+    deps:
+    - path: data/processed/train_processed.csv
+      hash: md5
+      md5: 82fbf0c360a1e9938ed7feb5abd0e157
+      size: 30834368
+      isexec: true
+    - path: src/models/train_model.py
+      hash: md5
+      md5: a09a084636a6bb40ca13f953874279f1
+      size: 1642
+      isexec: true
+    params:
+      params.yaml:
+        train_model.learning_rate: 0.10083304360762205
+        train_model.max_depth: 6
+        train_model.n_estimators: 251
+    outs:
+    - path: models/model.joblib
+      hash: md5
+      md5: 88bc845718fb9611e851ba598f0dbed4
+      size: 995800
+      isexec: true
+  predict_model:
+    cmd: python src/models/predict_model.py
+    deps:
+    - path: data/processed/test_processed.csv
+      hash: md5
+      md5: bf5786e7649be7b24f8207d0594a55c6
+      size: 7744979
+      isexec: true
+    - path: models/model.joblib
+      hash: md5
+      md5: 88bc845718fb9611e851ba598f0dbed4
+      size: 995800
+      isexec: true
+    params:
+      params.yaml:
+        predict_model.Cylinders: 4
+        predict_model.Engine Size(L): 3.5
+        predict_model.Fuel Consumption City (L/100 km): 16.1
+        predict_model.Fuel Consumption Comb (L/100 km): 13.5
+        predict_model.Fuel Consumption Comb (mpg): 22
+        predict_model.Fuel Consumption Hwy (L/100 km): 11.8
+        predict_model.Fuel Type: X
+        predict_model.Make: ford
+        predict_model.Model: focus ffv
+        predict_model.Transmission: M5
+        predict_model.Vehicle Class: compact

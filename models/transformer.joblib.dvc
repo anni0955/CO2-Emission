@@ -1,6 +1,0 @@
-outs:
-- md5: 28fdc09f0c235cb141df431ee76e1f82
-  size: 29789
-  isexec: true
-  hash: md5
-  path: transformer.joblib

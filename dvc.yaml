@@ -1,0 +1,75 @@
+stages:
+  data-cleaning:
+    cmd: python src/data/data-cleaning.py
+
+    deps:
+    - data/raw/CO2_Emissions_Canada.csv
+    - src/data/data-cleaning.py
+
+    outs:
+    - data/raw/cleaned.csv
+
+  data-preparation:
+    cmd: python src/data/data-preparation.py
+
+    params:
+    - Data_Preparation.test_size
+    - Data_Preparation.random_state
+
+    deps:
+    - data/raw/cleaned.csv
+    - src/data/data-preparation.py
+
+    outs:
+    - data/interim/train.csv
+    - data/interim/test.csv
+
+  feature_engineering:
+    cmd: python src/features/feature_engineering.py
+
+    deps:
+    - data/interim/train.csv
+    - data/interim/test.csv 
+    - src/features/feature_engineering.py
+
+    outs: 
+    - data/processed/train_processed.csv
+    - data/processed/test_processed.csv
+    - models/transformer.joblib
+
+  train_model:
+    cmd: python src/models/train_model.py
+
+    params: 
+    - train_model.n_estimators
+    - train_model.max_depth
+    - train_model.learning_rate
+
+    deps:
+    - data/processed/train_processed.csv
+    - src/models/train_model.py
+
+    outs:
+    - models/model.joblib
+  
+  predict_model: 
+    cmd: python src/models/predict_model.py
+
+    params:
+    - predict_model.Make
+    - predict_model.Model
+    - predict_model.Vehicle Class
+    - predict_model.Engine Size(L)
+    - predict_model.Cylinders
+    - predict_model.Transmission
+    - predict_model.Fuel Type
+    - predict_model.Fuel Consumption City (L/100 km)
+    - predict_model.Fuel Consumption Hwy (L/100 km)
+    - predict_model.Fuel Consumption Comb (L/100 km)
+    - predict_model.Fuel Consumption Comb (mpg)
+
+
+    deps: 
+    - data/processed/test_processed.csv
+    - models/model.joblib
+

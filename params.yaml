@@ -1,6 +1,6 @@
 Data_Preparation:
   test_size: .2
-  random_state: 42
+  random_state: 41
 
 train_model:
   n_estimators: 251
@@ -14,7 +14,7 @@ predict_model:
   Engine Size(L): 3.5
   Cylinders: 4
   Transmission: 'M5'
-  Fuel Type: 'E'
+  Fuel Type: 'X'
   Fuel Consumption City (L/100 km): 16.1
   Fuel Consumption Hwy (L/100 km): 11.8
   Fuel Consumption Comb (L/100 km): 13.5
