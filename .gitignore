@@ -75,14 +75,17 @@ target/
 # Jupyter NB Checkpoints
 .ipynb_checkpoints/
 
-# ignore all data files
+## ignore all data files
 data/**
 
-# but keep the directory structure visible
+# keep data directories
 !data/
 !data/**/
 
-# and track dvc metadata files
+# keep gitkeep files
+!data/**/.gitkeep
+
+# keep dvc files if any
 !data/**/*.dvc
 
 # Mac OS-specific storage files
@@ -95,7 +98,8 @@ data/**
 # Mypy cache
 .mypy_cache/
 
-# models
 models/**
 !models/
+!models/**/
+!models/**/.gitkeep
 !models/**/*.dvc
