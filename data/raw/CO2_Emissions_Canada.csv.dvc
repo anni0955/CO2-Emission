@@ -1,0 +1,6 @@
+outs:
+- md5: e22c65b6c7464ba20e95d518a2275420
+  size: 476091
+  isexec: true
+  hash: md5
+  path: CO2_Emissions_Canada.csv

@@ -1,6 +1,6 @@
 Data_Preparation:
   test_size: .2
-  random_state: 45
+  random_state: 43
 
 train_model:
   n_estimators: 251
